@@ -14,11 +14,14 @@ Here you can watch some short videos of first prototypes
 
 ### "Duel" mode fight
 
-[![duel gameplay](./.readme/duel_preview.png)](./.readme/duel.mov)
+
+https://user-images.githubusercontent.com/23284240/171448433-74c6a320-510b-4229-a85f-d22ddebb024d.mov
+
 
 ### "Team on team" mode fight
 
-[![team on team gameplay](./.readme/teamonteam_preview.png)](./.readme/teamonteam.mov)
+https://user-images.githubusercontent.com/23284240/171448517-7d4628b9-fb41-468a-940f-46c6b8a6b07b.mov
+
 
 ---
 
