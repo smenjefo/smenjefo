@@ -1,0 +1,18 @@
+{
+  "version": 2,
+  "projects": {
+    "smenjefo-app-shell": "apps/smenjefo-app-shell",
+    "smenjefo-app-shell-e2e": "apps/smenjefo-app-shell-e2e",
+    "smenjefo-mfe-fight": "apps/smenjefo-mfe-fight",
+    "smenjefo-mfe-fight-e2e": "apps/smenjefo-mfe-fight-e2e",
+    "smenjefo-mfe-fight-registration": "apps/smenjefo-mfe-fight-registration",
+    "smenjefo-mfe-fight-registration-e2e": "apps/smenjefo-mfe-fight-registration-e2e",
+    "smenjefo-service-monolith-mvp": "apps/smenjefo-service-monolith-mvp",
+    "smenjefo-service-websocket-gateway": "apps/smenjefo-service-websocket-gateway",
+    "smenjefo-static-server": "apps/smenjefo-static-server",
+    "smenjefo-sprites": "libs/smenjefo-sprites",
+    "smenjefo-localization": "libs/smenjefo-localization",
+    "smenjefo-mfe": "libs/smenjefo-mfe",
+    "smenjefo-ui": "libs/smenjefo-ui"
+  }
+}

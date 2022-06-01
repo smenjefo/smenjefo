@@ -1,0 +1,32 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es2015",
+    "module": "esnext",
+    "lib": ["es2017", "dom"],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "noImplicitReturns": false,
+    "resolveJsonModule": true,
+    "baseUrl": ".",
+    "paths": {
+      "@smenjefo/smenjefo-localization": [
+        "libs/smenjefo-localization/src/index.ts"
+      ],
+      "@smenjefo/smenjefo-mfe": ["libs/smenjefo-mfe/src/index.ts"],
+      "@smenjefo/smenjefo-sprites": ["libs/smenjefo-sprites/src/index.ts"],
+      "@smenjefo/smenjefo-ui": ["libs/smenjefo-ui/src/index.ts"],
+      "@smenjefo/workspace-extensions": [
+        "libs/workspace-extensions/src/index.ts"
+      ]
+    }
+  },
+  "exclude": ["node_modules", "tmp"]
+}

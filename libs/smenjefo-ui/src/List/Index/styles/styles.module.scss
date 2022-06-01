@@ -1,0 +1,27 @@
+$marginVariants: (
+  'margin',
+  'margin-left',
+  'margin-right',
+  'margin-top',
+  'margin-bottom',
+);
+
+$margins: (
+  'small': 8px,
+  'medium': 16px,
+  'large': 24px,
+);
+
+.list {
+  padding: 0;
+
+  @each $marginVariant in $marginVariants {
+    &_#{$marginVariant} {
+      @each $key, $value in $margins {
+        &_#{$key} {
+          #{$marginVariant}: $value;
+        }
+      }
+    }
+  }
+}

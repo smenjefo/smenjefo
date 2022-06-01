@@ -1,0 +1,7 @@
+@import "behavior/styles.module.scss";
+
+.player-list__player {
+  display: flex;
+  flex-direction: column;
+  max-width: 20vw;
+}

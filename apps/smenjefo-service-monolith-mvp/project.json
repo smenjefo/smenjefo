@@ -1,0 +1,57 @@
+{
+  "$schema": "..\\..\\node_modules\\nx\\schemas\\project-schema.json",
+  "sourceRoot": "apps/smenjefo-service-monolith-mvp/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/node:webpack",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/smenjefo-service-monolith-mvp",
+        "main": "apps/smenjefo-service-monolith-mvp/src/main.ts",
+        "tsConfig": "apps/smenjefo-service-monolith-mvp/tsconfig.app.json",
+        "assets": ["apps/smenjefo-service-monolith-mvp/src/assets"]
+      },
+      "configurations": {
+        "development": {},
+        "production": {
+          "optimization": true,
+          "extractLicenses": true,
+          "inspect": false,
+          "fileReplacements": [
+            {
+              "replace": "apps/smenjefo-service-monolith-mvp/src/environments/environment.ts",
+              "with": "apps/smenjefo-service-monolith-mvp/src/environments/environment.prod.ts"
+            }
+          ]
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/node:node",
+      "options": {
+        "buildTarget": "smenjefo-service-monolith-mvp:build"
+      },
+      "configurations": {
+        "development": {},
+        "production": {}
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/smenjefo-service-monolith-mvp/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/apps/smenjefo-service-monolith-mvp"],
+      "options": {
+        "jestConfig": "apps/smenjefo-service-monolith-mvp/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

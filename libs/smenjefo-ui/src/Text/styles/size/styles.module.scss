@@ -1,0 +1,17 @@
+$sizes: (
+  // 'small': clamp(.75rem, 2vw, 1rem),
+  // 'medium': clamp(.75rem, 2vw, 1rem),
+  'small': 16px,
+  'medium': 18px,
+  'large': 24px,
+);
+
+.text {
+  &_size {
+    @each $key, $value in $sizes {
+      &_#{$key} {
+        font-size: $value;
+      }
+    }
+  }
+}

@@ -1,0 +1,15 @@
+.table {
+  border: 1px solid #6033FF;
+  border-collapse: collapse;
+  border-radius: 20px;
+  table-layout: fixed;
+  width: 100%;
+  margin: 24px 0;
+
+  // borders
+  &_border {
+    &_unbordered {
+      border: none;
+    }
+  }
+}

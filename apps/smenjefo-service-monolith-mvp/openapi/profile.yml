@@ -1,0 +1,99 @@
+openapi: "3.0.1"
+info:
+  title: Profile
+  description: Profile management service
+  version: 0.1.0
+servers:
+- url: http://api.example.com/v1/profile
+paths:
+  /{profileId}:
+    parameters:
+    - in: path
+      name: profileId
+      required: true
+      schema:
+        type: string
+    get:
+      summary: Returns a profile
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                  - $ref: '#/components/schemas/ProfileCreated'
+    put:
+      summary: Registers a new profile
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Profile'
+      responses:
+        201:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  allOf:
+                    - $ref: '#/components/schemas/ProfileCreated'
+        400:
+          description: Bad request
+    patch:
+      summary: Updates a profile
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProfileCreated'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  allOf:
+                    - $ref: '#/components/schemas/ProfileCreated'
+        400:
+          description: Bad request
+
+components:
+  schemas:
+    Profile:
+      type: object
+      properties:
+        nickname:
+          type: string
+        status:
+          type: string
+          enum: [
+            "free",
+            "inFightApplication",
+            "inFight",
+          ]
+      required:
+        - nickname
+        - status
+
+    ProfileCreated:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/Profile'
+      properties:
+        entityId:
+          type: string
+        fightApplicationId:
+          type: string
+        fightId:
+          type: string
+      required:
+        - entityId
+        

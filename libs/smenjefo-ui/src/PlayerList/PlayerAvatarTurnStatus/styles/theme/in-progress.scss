@@ -1,0 +1,7 @@
+.player-list__player-avatar-turn-status_in-progress {
+  background-color: #FFFFFF;
+
+  &::after {
+    content: '⧖';
+  }
+}

@@ -1,0 +1,55 @@
+$paddingVariants: (
+  'padding',
+  'padding-left',
+  'padding-right',
+  'padding-top',
+  'padding-bottom',
+);
+
+$paddings: (
+  'small': 8px,
+  'medium': 16px,
+  'large': 24px,
+);
+
+.table__th {
+  border: 1px solid #6033FF;
+
+  // paddings
+  @each $paddingVariant in $paddingVariants {
+    &_#{$paddingVariant} {
+      @each $key, $value in $paddings {
+        &_#{$key} {
+          #{$paddingVariant}: $value;
+        }
+      }
+    }
+  }
+
+  // text aligns
+  &_text-align {
+    &_left {
+      text-align: left;
+    }
+
+    &_right {
+      text-align: right;
+    }
+
+    &_center {
+      text-align: center;
+    }
+  }
+
+  // borders
+  &_border {
+    &_unbordered {
+      border: none;
+    }
+
+    &_unbordered-vertical {
+      border-left: none;
+      border-right: none;
+    }
+  }
+}

@@ -1,0 +1,17 @@
+@import "theme/styles.module.scss";
+
+.turn-window__turn {
+  cursor: pointer;
+  margin: 8px;
+  padding: 8px;
+  width: 100px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  user-select: none;
+
+  &.is-disabled {
+    opacity: 0.6;
+    pointer-events: none;
+  }
+}

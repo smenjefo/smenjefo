@@ -1,0 +1,17 @@
+.pagination {
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  &__item {
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    text-align: center;
+    line-height: 32px;
+    background-color: red;
+    margin: 8px;
+    cursor: pointer;
+    border-radius: 30px;
+  }
+}

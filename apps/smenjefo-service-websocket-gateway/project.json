@@ -1,0 +1,48 @@
+{
+  "$schema": "..\\..\\node_modules\\nx\\schemas\\project-schema.json",
+  "sourceRoot": "apps/smenjefo-service-websocket-gateway/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/workspace:run-commands",
+      "defaultConfiguration": "development",
+      "options": {
+        "command": "webpack --config apps/smenjefo-service-websocket-gateway/webpack.config.js"
+      },
+      "configurations": {
+        "development": {},
+        "production": {}
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/workspace:run-commands",
+      "defaultConfiguration": "development",
+      "options": {
+        "command": "node ./dist/apps/smenjefo-service-websocket-gateway/main.bundle.js"
+      },
+      "configurations": {
+        "development": {},
+        "production": {}
+      }
+    },
+    
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "apps/smenjefo-service-websocket-gateway/**/*.ts"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/apps/smenjefo-service-websocket-gateway"],
+      "options": {
+        "jestConfig": "apps/smenjefo-service-websocket-gateway/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

@@ -1,0 +1,111 @@
+version: "3"
+services:
+  smenjefo-app-shell:
+    build: ./apps/smenjefo-app-shell
+    volumes:
+      - "./dist/apps/smenjefo-app-shell:/usr/src/app"
+      - "./node_modules:/usr/src/app/node_modules"
+    ports:
+      - '3000:3000'
+    networks:
+      - smenjefo
+
+  smenjefo-mfe-fight:
+    build: ./apps/smenjefo-mfe-fight
+    volumes:
+      - "./dist/apps/smenjefo-mfe-fight:/usr/src/app"
+    ports:
+      - '3001:3001'
+    env_file:
+      - '.dev.env'
+
+  smenjefo-mfe-fight-registration:
+    build: ./apps/smenjefo-mfe-fight-registration
+    volumes:
+      - "./dist/apps/smenjefo-mfe-fight-registration:/usr/src/app"
+    ports:
+      - '3003:3003'
+    env_file:
+      - '.dev.env'
+
+  smenjefo-static-server:
+    build: ./apps/smenjefo-static-server
+    volumes:
+      - "./dist/apps/smenjefo-static-server:/usr/src/app"
+      - "./node_modules:/usr/src/app/node_modules"
+    ports:
+      - '3005:3005'
+    env_file:
+      - '.dev.env'
+    networks:
+      - smenjefo
+
+  smenjefo-service-monolith-mvp:
+    build: "./apps/smenjefo-service-monolith-mvp"
+    volumes:
+      - "./dist/apps/smenjefo-service-monolith-mvp:/usr/src/app"
+      - "./node_modules:/usr/src/app/node_modules"
+    networks:
+      - smenjefo
+    ports:
+      - "3100:3100"
+    env_file:
+      - '.dev.env'
+
+  smenjefo-service-websocket-gateway:
+    build: ./apps/smenjefo-service-websocket-gateway
+    volumes:
+      - "./dist/apps/smenjefo-service-websocket-gateway:/usr/src/app"
+      - "./node_modules:/usr/src/app/node_modules"
+    ports:
+      - '4000:4000'
+    env_file:
+      - '.dev.env'
+
+  mysql:
+    image: mysql
+    restart: always
+    ports:
+      - '3306:3306'
+    networks:
+      - smenjefo
+    env_file:
+      - '.dev.env'
+
+  redis:
+    image: redis
+    ports:
+      - '6379:6379'
+    networks:
+      - smenjefo
+
+
+  # consul-server1:
+  #   image: hashicorp/consul:1.11.2
+  #   container_name: consul-server1
+  #   restart: always
+  #   volumes:
+  #    - ./consul/server1.json:/consul/config/server1.json:ro
+  #    - ./consul/certs/:/consul/config/certs/:ro
+  #   # networks:
+  #   #   - smenjefo
+  #   ports:
+  #     - "8500:8500"
+  #     - "8600:8600/tcp"
+  #     - "8600:8600/udp"
+  #   command: "agent -bootstrap-expect=1"
+
+  # consul-client:
+  #   image: hashicorp/consul:1.11.2
+  #   container_name: consul-client
+  #   restart: always
+  #   volumes:
+  #    - ./consul/client.json:/consul/config/client.json:ro
+  #    - ./consul/certs/:/consul/config/certs/:ro
+  #   # networks:
+  #   #   - smenjefo
+  #   command: "agent"
+  
+networks:
+  smenjefo:
+    driver: 'bridge'

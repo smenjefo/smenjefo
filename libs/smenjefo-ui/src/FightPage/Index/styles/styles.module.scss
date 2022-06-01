@@ -1,0 +1,11 @@
+@import "type/styles.module.scss";
+
+.fight-page {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  /* it fixes address bar in mobile bug */
+  height: calc(var(--vh, 1vh) * 100);
+  padding: 1vh 1vw;
+  box-sizing: border-box;
+}

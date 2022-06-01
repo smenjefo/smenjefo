@@ -1,0 +1,48 @@
+{
+  "$schema": "..\\..\\node_modules\\nx\\schemas\\project-schema.json",
+  "sourceRoot": "apps/smenjefo-mfe-fight/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/workspace:run-commands",
+      "defaultConfiguration": "development",
+      "options": {
+        "commands": [
+          "rimraf dist/apps/smenjefo-mfe-fight",
+          "webpack --config apps/smenjefo-mfe-fight/webpack.config.js"
+        ]
+      },
+      "configurations": {
+        "development": {},
+        "production": {}
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/workspace:run-commands",
+      "defaultConfiguration": "development",
+      "options": {
+        "command": "webpack serve --config apps/smenjefo-mfe-fight/webpack.config.js"
+      },
+      "configurations": {
+        "development": {},
+        "production": {}
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/smenjefo-mfe-fight/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/apps/smenjefo-mfe-fight"],
+      "options": {
+        "jestConfig": "apps/smenjefo-mfe-fight/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

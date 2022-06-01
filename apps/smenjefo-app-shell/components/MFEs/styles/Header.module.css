@@ -1,0 +1,31 @@
+.header {
+  display: flex;
+  justify-content: flex-start;
+  background-color: #6033FF;
+  font-family: 'Balsamiq Sans';
+  font-size: 18px;
+  margin-bottom: 8px;
+}
+
+.header__item {
+  display: inline-block;
+}
+
+.header__item_align_right {
+  flex-grow: 1;
+  text-align: right;
+}
+
+.header__item-profile {
+  color: #33FF56;
+  display: inline-block;
+  padding: 16px;
+}
+
+.header__item-link {
+  color: #FFFFFF;
+  text-decoration: none;
+  user-select: none;
+  display: inline-block;
+  padding: 16px;
+}

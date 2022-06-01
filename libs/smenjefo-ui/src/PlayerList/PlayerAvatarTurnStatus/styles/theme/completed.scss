@@ -1,0 +1,7 @@
+.player-list__player-avatar-turn-status_completed {
+  background-color: #33FF56;
+
+  &::after {
+    content: '✓';
+  }
+}

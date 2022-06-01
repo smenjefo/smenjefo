@@ -1,0 +1,4 @@
+.fight-page_type_spectator {
+  /* it fixes address bar in mobile bug */
+  height: calc((var(--vh, 1vh) * 100) - 10vh);
+}

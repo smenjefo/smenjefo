@@ -1,0 +1,14 @@
+@import "theme/styles.module.scss";
+
+.player-list__player-avatar-turn-status {
+  position: absolute;
+  bottom: 0;
+  right: 8px;
+  width: 16px;
+  height: 16px;
+  border: 1px solid #6033FF;
+  text-align: center;
+  line-height: 16px;
+  box-sizing: border-box;
+  color: #6033FF;
+}

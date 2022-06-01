@@ -1,0 +1,13 @@
+$paddings: (
+  'small': 8px,
+  'medium': 16px,
+  'large': 24px,
+);
+
+.text_padding {
+  @each $key, $value in $paddings {
+    &_#{$key} {
+      padding: $value;
+    }
+  }
+}

@@ -1,0 +1,354 @@
+openapi: "3.0.1"
+info:
+  title: Fight
+  description: Fights service
+  version: 0.1.0
+servers:
+- url: http://api.example.com/v1/fight
+paths:
+  /fights:
+    post:
+      summary: Creates a new fight
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Fight'
+      responses:
+        201:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  allOf:
+                    - $ref: '#/components/schemas/FightCreated'
+        400:
+          description: Bad request
+
+  /fights/{fightId}:
+    parameters:
+    - in: path
+      name: fightId
+      required: true
+      schema:
+        type: string
+    get:
+      summary: Returns a fight
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                  - $ref: '#/components/schemas/FightCreated'
+
+  /fights/{fightId}/rounds/{roundId}:
+    parameters:
+    - in: path
+      name: fightId
+      required: true
+      schema:
+        type: string
+    - in: path
+      name: roundId
+      required: true
+      schema:
+        type: string
+    get:
+      summary: Returns a round
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                  - $ref: '#/components/schemas/Round'
+    put:
+      summary: Creates a new round of a fight
+      responses:
+        201:
+          description: OK
+        400:
+          description: Bad request
+
+  /fights/{fightId}/rounds/{roundId}/turns:
+    parameters:
+    - in: path
+      name: fightId
+      required: true
+      schema:
+        type: string
+    - in: path
+      name: roundId
+      required: true
+      schema:
+        type: string
+    post:
+      summary: Creates a new turn of a round of a fight
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TurnCreate'
+      responses:
+        201:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  allOf:
+                    - $ref: '#/components/schemas/TurnCreated'
+        400:
+          description: Bad request
+
+components:
+  schemas:
+    Fight:
+      type: object
+      properties:
+        fightApplicationId:
+          type: string
+        fightConfigurationType:
+          type: string
+          enum: [
+            "default",
+          ]
+        players:
+          type: array
+          items:
+            allOf:
+              - $ref: '#/components/schemas/Player'
+        type:
+          type: array
+          items:
+            type: string
+            uniqueItems: true
+            enum: [
+              "duel",
+              "teamOnTeam",
+              "allVersusAll",
+            ]
+      required:
+        - fightApplicationId
+        - players
+        - fightConfigurationType
+        - type
+
+    FightCreated:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/Fight'
+      properties:
+        id:
+          type: string
+        currentRoundId:
+          type: string
+        status:
+          type: string
+          enum: [
+            "completed",
+            "inProgress",
+          ]
+        teams:
+          type: array
+          items:
+            type: object
+            properties:
+              teamId:
+                type: string
+      required:
+        - id
+        - currentRoundId
+        - teams
+        
+    Round:
+      type: object
+      properties:
+        id:
+          type: string
+        number:
+          type: number
+          exclusiveMinimum: false
+          minimum: 0
+          maximum: 3
+        nextRoundId:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        endsAt:
+          type: string
+          format: date-time
+        players:
+          type: array
+          items:
+            type: object
+            allOf:
+              - $ref: '#/components/schemas/PlayerCreated'
+        history:
+          type: array
+          items:
+            type: object
+            allOf:
+              - $ref: '#/components/schemas/History'
+      required:
+        - id
+        - number
+        - nextRoundId
+        - createdAt
+        - endsAt
+        - players
+        - history
+
+    Player:
+      type: object
+      properties:
+        entityId:
+          type: string
+        nickname:
+          type: string
+        role:
+          type: string
+        avatarURL:
+          type: string
+        team:
+          type: string
+      required:
+        - entityId
+        - nickname
+        - role
+        - avatarURL
+        - team
+
+    PlayerCreated:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/Player'
+      properties:
+        hp:
+          type: number
+          exclusiveMinimum: false
+          minimum: 0
+          maximum: 3
+        energy:
+          type: number
+          exclusiveMinimum: false
+          minimum: 0
+          maximum: 3
+        status:
+          type: string
+          enum: [
+            "inGame",
+            "eliminated",
+          ]
+        turnStatus:
+          type: string
+          enum: [
+            "inProgress",
+            "completed",
+          ]
+      required:
+        - hp
+        - energy
+        - status
+        - turnStatus
+
+    History:
+      type: array
+      items:
+        type: object
+        allOf:
+          - $ref: '#/components/schemas/HistoryRecord'
+        
+    HistoryRecord:
+      type: object
+      properties:
+        type:
+          type: string
+          enum: [
+            "mutual",
+            "unidirectional",
+            "none",
+          ]
+        initiator:
+          type: object
+          allOf:
+            - $ref: '#/components/schemas/HistoryRecordPlayer'
+        target:
+          type: object
+          allOf:
+            - $ref: '#/components/schemas/HistoryRecordPlayer'
+      required:
+        - type
+
+    TurnCreate:
+      type: object
+      properties:
+        initiatorId:
+          type: string
+        targetId:
+          type: string
+        turnType:
+          type: string
+          enum: [
+            "rock",
+            "scissors",
+            "paper",
+            "superRock",
+            "superScissors",
+            "superPaper",
+            "handOfHelp",
+            "donor",
+            "cheat",
+            "skip",
+          ]
+      required:
+        - initiatorId
+        - targetId
+        - turnType
+
+    TurnCreated:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/TurnCreate'
+        
+    HistoryRecordPlayer:
+      type: object
+      properties:
+        nickname:
+          type: string
+        turnType:
+          type: string
+          enum: [
+            "rock",
+            "scissors",
+            "paper",
+            "superRock",
+            "superScissors",
+            "superPaper",
+            "handOfHelp",
+            "donor",
+            "cheat",
+            "skip",
+          ]
+        lostHP:
+          type: number
+          exclusiveMinimum: false
+          minimum: 0
+        lostEnergy:
+          type: number
+          exclusiveMinimum: false
+          minimum: 0
+      required:
+        - type
+  

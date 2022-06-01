@@ -1,0 +1,14 @@
+$weights: (
+  'semi-bold': 400,
+  'bold': 700,
+);
+
+.text {
+  &_weight {
+    @each $key, $value in $weights {
+      &_#{$key} {
+        font-weight: $value;
+      }
+    }
+  }
+}

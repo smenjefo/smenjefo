@@ -1,0 +1,256 @@
+openapi: "3.0.1"
+info:
+  title: Fight Registration
+  description: Fight applications management service
+  version: 0.1.0
+servers:
+- url: http://api.example.com/v1/fight-registration
+paths:
+  /:
+    get:
+      summary: Returns a list of possible fight application types
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+                  uniqueItems: true
+                  enum: [
+                    "duel",
+                    "teamOnTeam",
+                    "allVersusAll",
+                  ]
+
+  /applications:
+    get:
+      summary: Returns a list of possible fight application types
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  allOf:
+                    - $ref: '#/components/schemas/FightApplicationCreated'
+    post:
+      summary: Registers a new "TeamOnTeam" fight application
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FightApplicationCreate'
+      responses:
+        201:
+          description: Created
+        400:
+          description: Bad request
+
+  /applications/{fightApplicationId}:
+    parameters:
+    - in: path
+      name: fightApplicationId
+      required: true
+      schema:
+        type: string
+    get:
+      summary: Returns a fight application
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                  - $ref: '#/components/schemas/FightApplicationCreated'
+    delete:
+      summary: Deletes a fight application
+      responses:
+        204:
+          description: Deleted
+
+  /applications/{fightApplicationId}/teams/{teamId}/players:
+    parameters:
+    - in: path
+      name: fightApplicationId
+      required: true
+      schema:
+        type: string
+    - in: path
+      name: teamId
+      required: true
+      schema:
+        type: string
+    post:
+      summary: Registers a new player of a team
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FightApplicationPlayer'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FightApplicationPlayerCreated'
+        400:
+          description: Bad request
+
+  /applications/{fightApplicationId}/teams/{teamId}/players/{playerId}:
+    parameters:
+    - in: path
+      name: fightApplicationId
+      required: true
+      schema:
+        type: string
+    - in: path
+      name: teamId
+      required: true
+      schema:
+        type: string
+    - in: path
+      name: playerId
+      required: true
+      schema:
+        type: string
+    delete:
+      summary: Deletes a player from a team
+      responses:
+        204:
+          description: Deleted
+
+components:
+  schemas:
+    FightApplicationCreated:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/FightApplicationCreate'
+      properties:
+        id:
+          type: string
+        status:
+          type: string
+          enum: [
+            "inProgress",
+            "complete",
+          ]
+        teams:
+          type: array
+          uniqueItems: true
+          items:
+            allOf:
+              - $ref: '#/components/schemas/FightApplicationTeam'
+      required:
+        - teams
+
+    FightApplicationCreate:
+      type: object
+      properties:
+        ownerEntityId:
+          type: string
+        ownerNickname:
+          type: string
+        type:
+          type: string
+          enum: [
+            "teamOnTeam",
+            "duel",
+            "allVersusAll",
+          ]
+        mode:
+          type: string
+          enum: [
+            "training",
+            "ladder",
+          ]
+        fightFilters:
+          type: array
+          uniqueItems: true
+          items:
+            allOf:
+              - $ref: '#/components/schemas/FightApplicationFightFilter'
+        fightTriggers:
+          type: array
+          uniqueItems: true
+          items:
+            allOf:
+              - $ref: '#/components/schemas/FightApplicationFightTrigger'
+        teamCapacity:
+          type: number
+          minimum: 0
+          maximum: 5
+          exclusiveMinimum: true
+      required:
+        - ownerEntityId
+        - ownerNickname
+        - type
+        - mode
+        - fightFilters
+        - fightTriggers
+        - teamCapacity
+      
+    FightApplicationFightTrigger:
+      type: object
+      properties:
+        type:
+          type: string
+          enum: [
+            "none",
+            "shuffle",
+            "shuffle+",
+          ]
+      
+    FightApplicationFightFilter:
+      type: object
+      properties:
+        type:
+          type: string
+          enum: [
+            "byAuthority",
+          ]
+        value:
+          type: number
+      
+    FightApplicationTeam:
+      type: object
+      properties:
+        id:
+          type: string
+        players:
+          type: array
+          uniqueItems: true
+          items:
+            allOf:
+              - $ref: '#/components/schemas/FightApplicationPlayer'
+
+    FightApplicationPlayer:
+      type: object
+      properties:
+        entityId:
+          description: player's id
+          type: string
+        nickname:
+          description: player's nickname
+          type: string
+
+    FightApplicationPlayerCreated:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/FightApplicationPlayer'
+      properties:
+        fightApplicationId:
+          type: string
+        teamId:
+          type: string
+
+        

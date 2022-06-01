@@ -1,0 +1,50 @@
+{
+  "$schema": "..\\..\\node_modules\\nx\\schemas\\project-schema.json",
+  "sourceRoot": "apps/smenjefo-mfe-fight-registration/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/workspace:run-commands",
+      "defaultConfiguration": "development",
+      "options": {
+        "commands": [
+          "rimraf dist/apps/smenjefo-mfe-fight-registration",
+          "webpack --config apps/smenjefo-mfe-fight-registration/webpack.config.js"
+        ]
+      },
+      "configurations": {
+        "development": {},
+        "production": {}
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/workspace:run-commands",
+      "defaultConfiguration": "development",
+      "options": {
+        "command": "webpack serve --config apps/smenjefo-mfe-fight-registration/webpack.config.js"
+      },
+      "configurations": {
+        "development": {},
+        "production": {}
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "apps/smenjefo-mfe-fight-registration/**/*.{ts,tsx,js,jsx}"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/apps/smenjefo-mfe-fight-registration"],
+      "options": {
+        "jestConfig": "apps/smenjefo-mfe-fight-registration/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

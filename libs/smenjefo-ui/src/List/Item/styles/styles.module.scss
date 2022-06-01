@@ -1,0 +1,13 @@
+.list__item {
+  display: block;
+
+  &_direction {
+    &_horizontal {
+      display: inline;
+    }
+
+    &_vertical {
+      display: block;
+    }
+  }
+}
